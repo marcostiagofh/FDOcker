@@ -1,0 +1,27 @@
+version: '3'
+services:
+  web:
+    build: ./app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    networks:
+      - visit-counter-net
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: visit_counter
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - visit-counter-net
+    volumes:
+      - ./app/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+networks:
+  visit-counter-net:
+
+volumes:
+  pg-data:
