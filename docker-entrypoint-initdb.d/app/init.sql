@@ -2,4 +2,3 @@ CREATE TABLE IF NOT EXISTS visit (
     id SERIAL PRIMARY KEY,
     count INTEGER DEFAULT 0
 );
-INSERT INTO visit (count) VALUES (1);

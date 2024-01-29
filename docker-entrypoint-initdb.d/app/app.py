@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
 import time
 from sqlalchemy import exc
+from app import Visit
 import os  # Adicione esta importação
 
 app = Flask(__name__, template_folder='./docker-entrypoint-initdb.d/templates')  # Altere o caminho aqui
@@ -40,8 +41,6 @@ with app.app_context():
     try:
         db.session.execute('SELECT 1')  # Testa a conexão
         db.create_all()
-        db.session.execute('INSERT INTO visit (count) VALUES (1)')
-        db.session.commit()
     except exc.SQLAlchemyError as e:
         print(f"Erro ao criar tabela: {e}")
 
@@ -58,14 +57,13 @@ def home():
 def increment_count():
     # Incrementa a contagem no banco de dados usando uma instrução SQL bruta
     db.engine.execute(text('UPDATE visit SET count = count + 1'))
-    db.session.commit() 
 
 def get_count():
     visit = Visit.query.first()
     if visit:
         return visit.count
     else:
-        return 0  # ou outro valor padrão desejado
+        return 69  # ou outro valor padrão desejado
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
