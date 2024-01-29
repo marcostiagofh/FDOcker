@@ -3,7 +3,7 @@ services:
   web:
     build: ./  # Alteração aqui para apontar para a pasta pai
     ports:
-      - "80:80"
+      - "5000:5000"
     depends_on:
       - db
     networks:
